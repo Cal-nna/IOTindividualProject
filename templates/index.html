@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CalWeb Scene</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body class="{{ scene }}">
+    <div>
+        <h1>{{ scene | capitalize }} Mode</h1>
+
+        <form method="POST" action="/toggle">
+            <button type="submit">Toggle Day / Night</button>
+        </form>
+    </div>
+</body>
+</html>

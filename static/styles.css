@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.5s;
+    font-family: Arial, sans-serif;
+}
+
+body.day {
+    background: linear-gradient(#87ceeb, #ffffff);
+    color: black;
+}
+
+body.night {
+    background: linear-gradient(#0b1d3a, #000000);
+    color: white;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer;
+}
