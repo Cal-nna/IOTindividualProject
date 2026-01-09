@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logs</title>
+</head>
+<body>
+    <h2>Scene Change Logs</h2>
+    <ul>
+        {% for log in logs %}
+        <li>
+            {{ log.timestamp }} by {{ log.username }}:
+            {{ log.old_scene }} to {{ log.new_scene }}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
