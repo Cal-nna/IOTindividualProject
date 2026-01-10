@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from app.pubnub_client import pubnub, CHANNEL
+from pubnub.exceptions import PubNubException
 
 
 app = Flask(__name__)
@@ -52,13 +54,22 @@ def index():
 @login_required
 def toggle():
     old_scene = current_mode["scene"]
+    new_scene = "night" if old_scene == "day" else "day"
 
-    current_mode["scene"] = "night" if old_scene == "day" else "day"
+    current_mode["scene"] = new_scene
+
+    try:
+        pubnub.publish() \
+            .channel(CHANNEL) \
+            .message({"mode": new_scene}) \
+            .sync()
+    except PubNubException as e:
+        return str(e), 500
 
     log = SceneLog(
         username=current_user.username,
         old_scene=old_scene,
-        new_scene=current_mode["scene"]
+        new_scene=new_scene
     )
 
     db.session.add(log)
@@ -126,3 +137,35 @@ def logout():
 def logs():
     logs = SceneLog.query.order_by(SceneLog.timestamp.desc()).all()
     return render_template("logs.html", logs=logs)
+
+
+@app.route("/api/visual", methods=["POST"])
+@login_required
+def set_visual_mode():
+    data = request.get_json()
+    mode = data.get("mode")
+
+    if mode not in ("day", "night"):
+        return jsonify({"error": "Invalid mode"}), 400
+
+    old_scene = current_mode["scene"]
+    current_mode["scene"] = mode
+
+    try:
+        pubnub.publish() \
+            .channel(CHANNEL) \
+            .message({"mode": mode}) \
+            .sync()
+    except PubNubException as e:
+        return jsonify({"error": str(e)}), 500
+
+    log = SceneLog(
+        username=current_user.username,
+        old_scene=old_scene,
+        new_scene=mode
+    )
+
+    db.session.add(log)
+    db.session.commit()
+
+    return jsonify({"status": "ok", "mode": mode})
