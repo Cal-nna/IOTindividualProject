@@ -100,3 +100,46 @@ Example (index.html):
         <button onclick="setMode('night')">Night</button>
     </div>
 </body>
+
+Because the scene is applied at the <body> level:
+
+Background gradients fill the entire viewport
+
+Landscape elements (hills, sky, sun/moon) remain consistent
+
+UI elements appear visually embedded within the environment
+
+Shared Styling Across Pages
+
+The same <body class="{{ scene }}"> pattern is used across:
+
+index.html
+login.html
+register.html
+logs.html
+
+The login and register pages visually match the current scene
+Scene changes persist while navigating the site
+Users experience a consistent environment regardless of page
+
+Example (login.html):
+<body class="{{ scene }}">
+    <h2>Login</h2>
+
+    <form method="POST">
+        <input name="username" placeholder="Username" required>
+        <input name="password" type="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+</body>
+
+
+No additional scene logic is required in the template itself — the backend simply passes the current scene value when rendering the page.
+
+#Backend Scene Injection
+The Flask backend injects the current scene into every template:
+return render_template("login.html", scene=current_mode["scene"])
+
+The visual state remains synchronised
+Scene changes apply globally
+New pages automatically support day/night visuals without extra CSS
