@@ -1,5 +1,5 @@
 const pubnub = new PubNub({
-    subscribeKey: "sub-c-764683fa-a709-42d5-a0bb-a9eca9c99146",
+    subscribeKey: "SECRET_KEY",
     uuid: "calweb-browser-" + Math.random().toString(36).slice(2)
 });
 
