@@ -1,8 +1,5 @@
 # CalWeb – Real-Time Day/Night Web Visuals via PubNub & Flask
 
-![CalWeb Day Scene](./docs/screenshots/day-mode.png)
-![CalWeb Night Scene](./docs/screenshots/night-mode.png)
-
 🔗 **Live site:** https://calweb.online/
 
 ---
@@ -24,17 +21,6 @@ Although the physical hardware component was not completed, the system architect
 - All connected users see the visual update instantly
 - User interactions are **authenticated and logged**
 - The system is designed to accept **hardware input** (e.g. Raspberry Pi sensors)
-
----
-
-User / Hardware
-↓
-PubNub
-↓
-Flask Web App (AWS EC2)
-↓
-SQLite Database
-
 
 ---
 
@@ -149,4 +135,12 @@ username	User who triggered change
 old_scene	Previous state
 new_scene	New state
 ## System Architecture
+
+User / Hardware
+↓
+PubNub
+↓
+Flask Web App (AWS EC2)
+↓
+SQLite Database
 
