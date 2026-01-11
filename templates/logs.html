@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="{{ scene }}">
+    <div class="container">
+        <h2>Scene Change Logs</h2>
+        <ul>
+            {% for log in logs %}
+            <li>
+                {{ log.timestamp }} by {{ log.username }}:
+                {{ log.old_scene }} ? {{ log.new_scene }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
