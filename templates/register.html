@@ -2,8 +2,13 @@
 <html>
 <head>
     <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-<body>
+
+<body class="{{ scene }}">
+<div class="scene">
+<div class="container">
+<div class="content">
     <h2>Create Account</h2>
 
     <form method="POST">
@@ -29,5 +34,8 @@
         Already have an account?
         <a href="{{ url_for('login') }}">Login</a>
     </p>
+</div>
+    </div>
+    </div>
 </body>
 </html>

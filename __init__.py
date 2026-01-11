@@ -93,10 +93,12 @@ def load_user(user_id):
 def login():
     if request.method == "POST":
         user = User.query.filter_by(username=request.form["username"]).first()
+
         if user and user.check_password(request.form["password"]):
             login_user(user)
             return redirect(url_for("index"))
-        return "Invalid credentials", 401
+
+        return render_template("login.html", error="Invalid credentials")
 
     return render_template("login.html")
 
@@ -169,3 +171,10 @@ def set_visual_mode():
     db.session.commit()
 
     return jsonify({"status": "ok", "mode": mode})
+
+@app.context_processor
+def inject_scene():
+    return {
+        "scene": current_mode["scene"]
+    }
+

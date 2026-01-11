@@ -2,16 +2,19 @@
 <html>
 <head>
     <title>Logs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-<body>
-    <h2>Scene Change Logs</h2>
-    <ul>
-        {% for log in logs %}
-        <li>
-            {{ log.timestamp }} by {{ log.username }}:
-            {{ log.old_scene }} to {{ log.new_scene }}
-        </li>
-        {% endfor %}
-    </ul>
+<body class="{{ scene }}">
+    <div class="container">
+        <h2>Scene Change Logs</h2>
+        <ul>
+            {% for log in logs %}
+            <li>
+                {{ log.timestamp }} by {{ log.username }}:
+                {{ log.old_scene }} ? {{ log.new_scene }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
